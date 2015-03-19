@@ -13,17 +13,63 @@ public class RingBufferTest {
 		fail("Not yet implemented");
 	}*/
 	
-	//testen ob intialisieren funktioniert
+	//Can i intialize the object
 	@Test
-	public void testRingBuffer1()
+	public void testinitialize()
 	{
 		RingBuffer<Object> rb = new RingBuffer<Object>(2);
 		assertNotNull(rb);
 	}
 	
-	// add  more elements to ringbuffer than  possible
+	//queuing and dequing = same
+	@Test
+	public void testEnqueue1() throws RingBufferException
+	{
+		RingBuffer<String> rb = new RingBuffer<String>(5);
+		rb.enqueue("test");
+		assertEquals("test",rb.dequeue());
+			
+	}
+	
+	@Test
+	//check the Size = the Itemcount of the Buffer
+	public void testSize1() throws RingBufferException
+	{
+		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
+		rb.enqueue(2);
+		rb.enqueue(1);
+		assertEquals(2, rb.size());
+	}
+	
+	@Test
+	//check size after a item has been removed
+	public void testSize2() throws RingBufferException
+	{
+		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
+		rb.enqueue(11);
+		rb.enqueue(22);
+		rb.dequeue();
+		rb.enqueue(33);
+		assertEquals(2,rb.size());
+		
+	}
+	
+	@Test
+	//Check if the IsEmpty does work 
+	public void testIsEmpty() throws RingBufferException
+	{
+		RingBuffer<Object> rb = new RingBuffer<Object>(3);
+		Object o = new Object();
+		rb.enqueue(o);
+		rb.dequeue();
+		assertEquals(true, rb.isEmpty());
+	}
+	
+	
+	
+	//Adding more elements to RingBuffer class than possible
 	@Test(expected=RingBufferException.class)
-	public void testRingBuffer2() throws RingBufferException 
+	public void testEnqueue2() throws RingBufferException 
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		rb.enqueue(3);
@@ -33,43 +79,21 @@ public class RingBufferTest {
 		
 	}
 	
-	@Test
-	//check size of Ringbuffer
-	public void testRingBuffer3() throws RingBufferException
-	{
-		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
-		rb.enqueue(2);
-		rb.enqueue(1);
-		assertEquals(2, rb.size());
-	}
-	
-	@Test
-	//check isEmpty
-	public void testRingBuffer4() throws RingBufferException
-	{
-		RingBuffer<Object> rb = new RingBuffer<Object>(3);
-		Object o = new Object();
-		rb.enqueue(o);
-		rb.dequeue();
-		assertEquals(true, rb.isEmpty());
-	}
-	
-	//test remove more elements than the queue has
+	//Removing more elements 
 	@Test(expected=RingBufferException.class)
-	public void testRingBuffer5() throws RingBufferException
+	public void testDequeue1() throws RingBufferException
 	{
 		RingBuffer<String> rb = new RingBuffer<String>(3);
 		rb.enqueue("A new and great String");
 		rb.dequeue();
 		rb.dequeue();
-		
-		
-	
+			
 	}
 	
-	//hinzufügen und löschen von elementen bei mehr elementen als der buffer beinhaltet
+	
+	//Enquing and dequing multiple elements in different order 
 	@Test
-	public void testRingBuffer6() throws RingBufferException
+	public void testIsEmpty2() throws RingBufferException
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		rb.enqueue(1);
@@ -85,26 +109,14 @@ public class RingBufferTest {
 		
 	}
 	
-	//queuing and dequing = same
-	@Test
-	public void testRingBuffer7() throws RingBufferException
-	{
-		RingBuffer<String> rb = new RingBuffer<String>(5);
-		rb.enqueue("test");
-		assertEquals("test",rb.dequeue());
-		
-		
-		
-	}
+
 	
-	@Test
-	public void testRingbuffer8()
+	//test if the methods gives back an iterator
+	@Test 
+	public void testIterator()
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		assertNotNull(rb.iterator());
-		
-		
-
 		/*rb.dequeue()
 		rb.enqueue(item);
 		rb.forEach(action);
@@ -112,43 +124,39 @@ public class RingBufferTest {
 		rb.iterator()
 		rb.size()
 		rb.spliterator()
-		*/
-		
-		
-		
-		
+		*/		
 	}
 
+	//test hasNext false after creating a Interator on an empty RingBuffer
 	@Test
-	public void testRingBuffer9()
+	public void testIteratorHasNext()
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		Iterator ib = rb.iterator();
 		assertEquals(false,ib.hasNext());
 	}
 	
+	//test the next Function if there is no next ITem 
 	@Test (expected=java.util.NoSuchElementException.class)
-	public void testRingBuffer10()
+	public void testIteratorNext()
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		Iterator ib = rb.iterator();
 		ib.next();
 	}
-	/*
-	final test with a collection with several items, make sure the iterator goes through each item, in the correct order (if there is one)
-	remove all elements from the collection: collection is now empty
-	*/
-	
+
+	//test the removeFunction of the Iterator
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRingBuffer11()
+	public void restIteratorRemove()
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		Iterator ib = rb.iterator();
 		ib.remove();
 	}
 	
+	//test the Iterator Next function if the items are given back in correct order. 
 	@Test
-	public void testRingBuffer12() throws RingBufferException
+	public void testIteratorNext2() throws RingBufferException
 	{
 		RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
 		rb.enqueue(1);
