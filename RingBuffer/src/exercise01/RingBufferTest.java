@@ -41,7 +41,7 @@ public class RingBufferTest {
 	}
 
 	/**
-	 * Check if RingBuffer returns least recently added object
+	 * Check if RingBuffer computes size correctly
 	 * 
 	 * @throws RingBufferException
 	 */

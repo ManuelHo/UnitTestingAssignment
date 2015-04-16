@@ -1,4 +1,5 @@
 package calculator.exception;
+
 /**
  * Exception to indicate that a negative value has occured.
  *

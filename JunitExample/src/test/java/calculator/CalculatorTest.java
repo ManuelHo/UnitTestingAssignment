@@ -1,18 +1,24 @@
 package calculator;
 
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import calculator.exception.IllegalOperatorException;
+import calculator.exception.InfinityException;
 import calculator.exception.NegativeValueException;
 
+/**
+ * Class to test Calculator.
+ * Note that all test cases are executed on the same instance of calculator to make sure
+ * that subsequent calculations do not affect each other.
+ *
+ */
 public class CalculatorTest {
-	
+
 	private static Calculator calculator;
-	
+
 	/**
 	 * This method is executed once and prior to all test methods of the test class. Needs to be static.
 	 * BeforeClass methods of superclasses are executed prior to BeforeClass methods of the current class.
@@ -21,11 +27,23 @@ public class CalculatorTest {
 	public static void setUpEnvironment() {
 		calculator = new Calculator();
 	}
+
+	/**
+	 * Test if addition works as expected.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testNegativeSummandAddition() throws Exception {
+		calculator.setX(3);
+		calculator.setY(-2);
+		calculator.setOperator(MathHelper.ADDITION);
+		Assert.assertEquals("Calculator did not add correctly", 1.0, calculator.calculate(), 0.01);
+	}
 	
-	/** 
-	 * Test annotation defines that this is a test method.
-	 * Note that any method which does not have a test annotation is considered a help method and not
-	 * executed unless it is executed by a test method.
+	/**
+	 * Test if addition works as expected.
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -36,6 +54,13 @@ public class CalculatorTest {
 		Assert.assertEquals("Calculator did not add correctly", 5.0, calculator.calculate(), 0.01);
 	}
 	
+	
+
+	/**
+	 * Test if subtraction works as expected.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSubtraction() throws Exception {
 		calculator.setX(5);
@@ -43,7 +68,12 @@ public class CalculatorTest {
 		calculator.setOperator(MathHelper.SUBTRACTION);
 		Assert.assertEquals("Calculator did not subtract correctly", 3.0, calculator.calculate(), 0.01 );
 	}
-	
+
+	/**
+	 *  Test if multiplication works as expected.
+	 *  
+	 * @throws Exception
+	 */
 	@Test
 	public void testMultiplication() throws Exception {
 		calculator.setX(4);
@@ -51,28 +81,55 @@ public class CalculatorTest {
 		calculator.setOperator(MathHelper.MULTIPLICATION);
 		Assert.assertEquals("Calculator did not multiply correctly", 8.0, calculator.calculate(), 0.01 );
 	}
-	
+
 	/**
-	 * The ignore annotation indicates that this test method is not executed when the test class is executed.
-	 * Normally this happens when test methods are testing behavior that is not implemented yet.
+	 * Test if division works as expected.
+	 *  
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore("Dividing not yet implemented")
 	public void testDivision() throws Exception {
 		calculator.setX(8);
 		calculator.setY(2);
 		calculator.setOperator(MathHelper.DIVISION);
 		Assert.assertEquals("Calculator did not divide correctly", 4.0, calculator.calculate(), 0.01 );
-	}	
+	}
 	
 	/**
-	 * If a test method is expected to throw an exception, the expected exception can be defined.
-	 * If another exception or no exception is thrown, the test method fails.
+	 * Test if division works as expected.
+	 *  
+	 * @throws Exception
+	 */
+	@Test
+	public void testNegativeDivision() throws Exception {
+		calculator.setX(-8);
+		calculator.setY(-2);
+		calculator.setOperator(MathHelper.DIVISION);
+		Assert.assertEquals("Calculator did not divide correctly", 4.0, calculator.calculate(), 0.01 );
+	}
+	
+	
+
+	/** Calculator should throw an InfinityException upon division by 0.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expected = InfinityException.class)
+    public void testDivisionByZero() throws Exception {
+        calculator.setX(8);
+        calculator.setY(0);
+        calculator.setOperator(MathHelper.DIVISION);
+        calculator.calculate();
+    }
+
+	/**
+	 * Because calculator is not supposed to deliver negative results, it should
+	 * throw a NegativeValueException when a negative result is computed.
+	 * 
 	 * @throws Exception
 	 */
 	@Test(expected = NegativeValueException.class)
-	public void testIllegalResult() throws Exception {
+	public void testIllegalSubtractionResult() throws Exception {
 		calculator.setX(3);
 		calculator.setY(5);
 		calculator.setOperator(MathHelper.SUBTRACTION);
@@ -80,9 +137,31 @@ public class CalculatorTest {
 	}
 	
 	/**
-	* This method is executed once and after to all test methods of the test class. Needs to be static.
-	 * AfterClass methods of superclasses are executed after to AfterClass methods of the current class.
+	 * Because calculator is not supposed to deliver negative results, it should
+	 * throw a NegativeValueException when a negative result is computed.
+	 * 
+	 * @throws Exception
 	 */
+	@Test(expected = NegativeValueException.class)
+	public void testIllegalMultiplicationResult() throws Exception {
+		calculator.setX(3);
+		calculator.setY(-5);
+		calculator.setOperator(MathHelper.MULTIPLICATION);
+		calculator.calculate();
+	}
+	
+	/** Test if calculator throws exception if an illegal operator has been specified.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expected = IllegalOperatorException.class)
+	public void testIllegalOperator() throws Exception {
+		calculator.setX(4);
+		calculator.setY(2);
+		calculator.setOperator('i');
+		calculator.calculate();
+	}
+	
 	@AfterClass
 	public static void tearDownEnvironment() {
 		calculator = null;
