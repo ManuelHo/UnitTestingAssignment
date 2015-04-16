@@ -5,7 +5,6 @@ import calculator.exception.InfinityException;
 /**
  * Utility class that provides methods for mathematical operations.
  *
- * @author pal
  */
 public class MathHelper {
 

@@ -2,13 +2,13 @@ package calculator;
 
 import java.util.Scanner;
 
+import calculator.exception.IllegalOperatorException;
 import calculator.exception.InfinityException;
 import calculator.exception.NegativeValueException;
 
 /**
  * Performs basic arithmetic operations.
  *
- * @author pal
  */
 public class Calculator {
 
@@ -41,8 +41,9 @@ public class Calculator {
      * @return result of calculation
      * @throws NegativeValueException - if result of calculation is a negative value
      * @throws InfinityException - if divisor == 0
+     * @throws IllegalOperatorException 
      */
-    public float calculate() throws NegativeValueException, InfinityException {
+    public float calculate() throws NegativeValueException, InfinityException, IllegalOperatorException {
         if (x == 0 && y == 0) {
             readInput();
         }
@@ -60,7 +61,7 @@ public class Calculator {
                 result = helper.divide(x, y);
                 break;
             default:
-                result = 0;
+              throw new IllegalOperatorException("Illegal operator (" + operator + ") has been specified - please select one of the four basic arithmetic operations");
         }
         resetValues();
         if (result < 0) {
@@ -89,13 +90,14 @@ public class Calculator {
     }
 
     /**
-     * Creates a Calculator object and prints its reult to System.out.
+     * Creates a Calculator object and prints its result to System.out.
      *
      * @param args - command line args are ignore
      * @throws NegativeValueException - when result of Calculator operation is negative
      * @throws InfinityException - when result of Calculator is infinity
+     * @throws IllegalOperatorException - when an illegal operator is specified
      */
-    public static void main(String[] args) throws NegativeValueException, InfinityException {
+    public static void main(String[] args) throws NegativeValueException, InfinityException, IllegalOperatorException {
         Calculator calc = new Calculator();
         System.out.println("Result: " + calc.calculate());
 

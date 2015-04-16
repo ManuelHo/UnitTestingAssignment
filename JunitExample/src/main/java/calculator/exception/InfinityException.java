@@ -10,7 +10,6 @@ package calculator.exception;
 /**
  * Exception to indicate that a infinity has occured.
  *
- * @author pal
  */
 public class InfinityException extends Exception {
 
