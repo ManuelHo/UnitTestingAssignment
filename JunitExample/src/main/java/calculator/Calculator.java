@@ -2,17 +2,21 @@ package calculator;
 
 import java.util.Scanner;
 
+import calculator.exception.InfinityException;
 import calculator.exception.NegativeValueException;
 
 /**
  * Performs basic arithmetic operations.
  *
+ * @author pal
  */
 public class Calculator {
 
     private MathHelper helper;
     private char operator;
-    private float x, y, result;
+    private float x;
+    private float y;
+    private float result;
 
     private Scanner in;
 
@@ -36,8 +40,9 @@ public class Calculator {
     /**
      * @return result of calculation
      * @throws NegativeValueException - if result of calculation is a negative value
+     * @throws InfinityException - if divisor == 0
      */
-    public float calculate() throws NegativeValueException {
+    public float calculate() throws NegativeValueException, InfinityException {
         if (x == 0 && y == 0) {
             readInput();
         }
@@ -88,8 +93,9 @@ public class Calculator {
      *
      * @param args - command line args are ignore
      * @throws NegativeValueException - when result of Calculator operation is negative
+     * @throws InfinityException - when result of Calculator is infinity
      */
-    public static void main(String[] args) throws NegativeValueException {
+    public static void main(String[] args) throws NegativeValueException, InfinityException {
         Calculator calc = new Calculator();
         System.out.println("Result: " + calc.calculate());
 
