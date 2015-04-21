@@ -7,6 +7,10 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author mwe
+ *
+ */
 public class RingBufferTest {
 
 	private RingBuffer<String> stringBuffer;
@@ -166,17 +170,14 @@ public class RingBufferTest {
 		assertEquals(true, integerBuffer.isEmpty());
 	}
 
-	// TODO: necessary?
-	// // test if the methods gives back an iterator
-	// @Test
-	// public void testIterator() {
-	// RingBuffer<Integer> rb = new RingBuffer<Integer>(3);
-	// assertNotNull(rb.iterator());
-	// /*
-	// * rb.dequeue() rb.enqueue(item); rb.forEach(action); rb.isEmpty()
-	// * rb.iterator() rb.size() rb.spliterator()
-	// */
-	// }
+	/** Check if Iterator returned != null
+ 	 * 
+	 */
+	@Test
+	public void testIteratorNotNull() {
+		assertNotNull(integerBuffer.iterator());
+		assertNotNull(stringBuffer.iterator());
+	}
 
 	/**
 	 * Check if the iterator returns the correct values
