@@ -7,10 +7,6 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author mwe
- *
- */
 public class RingBufferTest {
 
 	private RingBuffer<String> stringBuffer;
@@ -151,7 +147,6 @@ public class RingBufferTest {
 		assertEquals(Integer.valueOf(2), integerBuffer.dequeue());
 	}
 
-	// TODO: check if needed...
 	/**
 	 * Check if RingBuffer is empty after enqueuing and dequeuing some elements
 	 * 
