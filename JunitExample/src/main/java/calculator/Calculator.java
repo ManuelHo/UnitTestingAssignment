@@ -21,8 +21,12 @@ public class Calculator {
     private Scanner in;
 
     public Calculator() {
-        helper = new MathHelper();
-        in = new Scanner(System.in);
+    	this(new Scanner(System.in));
+    }
+    
+    public Calculator(Scanner scanner){
+    	helper = new MathHelper();
+    	in = scanner;
     }
 
     private void readInput() {
@@ -44,7 +48,7 @@ public class Calculator {
      * @throws IllegalOperatorException 
      */
     public float calculate() throws NegativeValueException, InfinityException, IllegalOperatorException {
-        if (x == 0 && y == 0) {
+    	if (x == 0 && y == 0) {
             readInput();
         }
         switch (operator) {
