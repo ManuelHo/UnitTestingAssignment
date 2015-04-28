@@ -1,5 +1,6 @@
 package calculator;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 import calculator.exception.IllegalOperatorException;
@@ -21,8 +22,18 @@ public class Calculator {
     private Scanner in;
 
     public Calculator() {
-        helper = new MathHelper();
-        in = new Scanner(System.in);
+//    	this(System.in);
+    	this(new Scanner(System.in));
+    }
+    
+    public Calculator(InputStream inputStream) {
+    	helper = new MathHelper();
+    	this.in = new Scanner(inputStream);
+    }
+    
+    public Calculator(Scanner inScanner) {
+    	helper = new MathHelper();
+    	this.in = inScanner;
     }
 
     private void readInput() {
