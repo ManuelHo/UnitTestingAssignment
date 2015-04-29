@@ -176,6 +176,7 @@ public class CalculatorTest {
 	 * @throws IllegalOperatorException
 	 */
 	@Test
+	
 	public void testInput() throws NegativeValueException, InfinityException, IllegalOperatorException{
 		// mock java.util.scanner
 		Scanner scanner = PowerMockito.mock(Scanner.class);
