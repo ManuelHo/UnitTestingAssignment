@@ -1,4 +1,4 @@
-package randoop;
+package exerecise01;
 import junit.framework.*;
 import junit.textui.*;
 
@@ -19,6 +19,8 @@ public class RandoopTest extends TestCase {
   public static Test suite() {
     TestSuite result = new TestSuite();
     result.addTest(new TestSuite(RandoopTest0.class));
+    result.addTest(new TestSuite(RandoopTest1.class));
+    result.addTest(new TestSuite(RandoopTest2.class));
     return result;
   }
 
