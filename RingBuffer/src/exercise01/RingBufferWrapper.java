@@ -65,9 +65,9 @@ public class RingBufferWrapper<Item> {
 		// preconditions end
 
 		Item dequeuedItem = ringBuffer.dequeue();
-
-		// postconditions start
-		assert ringBuffer.size() > oldRingBufferSize;
+		
+		//postconditions start
+		assert ringBuffer.size() == oldRingBufferSize + 1;
 		assert (ringBuffer.size() == 0) == ringBuffer.isEmpty();
 		// postconditions end
 
