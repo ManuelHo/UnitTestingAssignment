@@ -42,35 +42,53 @@ public class RingBufferWrapper<Item> {
 	}
 
 	public void enqueue(Item item) throws RingBufferException {
+		//TODO
+//		RingBufferException actual = null;
+//		RingBufferException expected = (!ringBuffer.isEmpty()) ? null
+//				: new RingBufferException("Ring buffer overflow");
+//
+//		int oldRingBufferSize = ringBuffer.size();
+//		
+//		try {			
+//			ringBuffer.enqueue(item);
+//			assert (ringBuffer.size() == (oldRingBufferSize - 1) );
+//		}catch (RingBufferException e){
+//			actual = e;
+//		}
+//		
+//		assert actual == expected;
+	}
+
+	public Item dequeue() throws RingBufferException {
+//		// preconditions start
+//		assert !ringBuffer.isEmpty();
+//		int oldRingBufferSize = ringBuffer.size();
+//		// preconditions end
+//
+//		Item dequeuedItem = ringBuffer.dequeue();
+//		
+//		//postconditions start
+//		assert ringBuffer.size() == oldRingBufferSize + 1;
+//		assert (ringBuffer.size() == 0) == ringBuffer.isEmpty();
+//		// postconditions end
+//
+//		return dequeuedItem;
+		
 		RingBufferException actual = null;
 		RingBufferException expected = (!ringBuffer.isEmpty()) ? null
-				: new RingBufferException("Ring buffer overflow");
+				: new RingBufferException("Ring buffer underflow");
 
 		int oldRingBufferSize = ringBuffer.size();
+		Item dequeuedItem = null;
 		
-		try {			
-			ringBuffer.enqueue(item);
-			assert (ringBuffer.size() == (oldRingBufferSize + 1) );
+		try {
+			dequeuedItem = ringBuffer.dequeue();
+			assert (ringBuffer.size() == (oldRingBufferSize - 1) );
 		}catch (RingBufferException e){
 			actual = e;
 		}
 		
-		assert actual == expected;
-	}
-
-	public Item dequeue() throws RingBufferException {
-		// preconditions start
-		assert !ringBuffer.isEmpty();
-		int oldRingBufferSize = ringBuffer.size();
-		// preconditions end
-
-		Item dequeuedItem = ringBuffer.dequeue();
-		
-		//postconditions start
-		assert ringBuffer.size() == oldRingBufferSize + 1;
-		assert (ringBuffer.size() == 0) == ringBuffer.isEmpty();
-		// postconditions end
-
+		assert actual.getMessage().equalsIgnoreCase(expected.getMessage());
 		return dequeuedItem;
 	}
 
