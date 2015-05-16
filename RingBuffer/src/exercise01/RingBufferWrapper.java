@@ -3,70 +3,79 @@ package exercise01;
 import java.util.Iterator;
 
 public class RingBufferWrapper<Item> {
-	
+
 	private RingBuffer<Item> ringBuffer;
-	
+
 	public RingBufferWrapper(int capacity) {
 		ringBuffer = new RingBuffer<>(capacity);
 	}
 
 	public boolean isEmpty() {
-		//preconditions start
+		// preconditions start
 		boolean oldringBufferStatus = ringBuffer.isEmpty();
-		//preconditions end
-		
+		// preconditions end
+
 		boolean ringBufferStatus = ringBuffer.isEmpty();
-		
-		//postconditions start
+
+		// postconditions start
 		assert ringBufferStatus == oldringBufferStatus;
 		if (ringBufferStatus)
-		assert ringBufferStatus == (ringBuffer.size()==0);
-		//postconditions end
-		
+			assert ringBufferStatus == (ringBuffer.size() == 0);
+		// postconditions end
+
 		return ringBufferStatus;
 	}
 
 	public int size() {
-		//preconditions start
+		// preconditions start
 		int oldRingBufferSize = ringBuffer.size();
-		//preconditions end
-				
+		// preconditions end
+
 		int ringBufferSize = ringBuffer.size();
-		
-		//postconditions start
+
+		// postconditions start
 		assert ringBufferSize == oldRingBufferSize;
 		assert (ringBufferSize > 0) == !ringBuffer.isEmpty();
-		//postconditions end
-		
+		// postconditions end
+
 		return ringBufferSize;
 	}
 
 	public void enqueue(Item item) throws RingBufferException {
-		//TODO
+		RingBufferException actual = null;
+		RingBufferException expected = (!ringBuffer.isEmpty()) ? null
+				: new RingBufferException("Ring buffer overflow");
+
+		int oldRingBufferSize = ringBuffer.size();
 		
-		ringBuffer.enqueue(item);
+		try {			
+			ringBuffer.enqueue(item);
+			assert (ringBuffer.size() == (oldRingBufferSize + 1) );
+		}catch (RingBufferException e){
+			actual = e;
+		}
+		
+		assert actual == expected;
 	}
 
 	public Item dequeue() throws RingBufferException {
-		//preconditions start
+		// preconditions start
 		assert !ringBuffer.isEmpty();
 		int oldRingBufferSize = ringBuffer.size();
-		//preconditions end
-		
+		// preconditions end
+
 		Item dequeuedItem = ringBuffer.dequeue();
-		
-		//postconditions start
+
+		// postconditions start
 		assert ringBuffer.size() > oldRingBufferSize;
 		assert (ringBuffer.size() == 0) == ringBuffer.isEmpty();
-		//postconditions end
-		
+		// postconditions end
+
 		return dequeuedItem;
 	}
 
 	public Iterator<Item> iterator() {
 		return ringBuffer.iterator();
 	}
-	
-	
 
 }
