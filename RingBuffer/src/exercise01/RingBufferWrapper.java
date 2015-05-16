@@ -64,7 +64,18 @@ public class RingBufferWrapper<Item> {
 	}
 
 	public Iterator<Item> iterator() {
-		return ringBuffer.iterator();
+		//preconditions start
+		Iterator<Item> oldIterator = ringBuffer.iterator();
+		//preconditions end
+		
+		Iterator<Item> iterator = ringBuffer.iterator();
+		
+		//postconditions start
+		assert iterator.hasNext() == oldIterator.hasNext();
+		assert iterator.hasNext() == !ringBuffer.isEmpty();
+		//postconditions end
+		
+		return iterator;
 	}
 	
 	
