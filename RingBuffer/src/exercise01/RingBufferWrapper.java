@@ -42,6 +42,7 @@ public class RingBufferWrapper<Item> {
 	}
 
 	public void enqueue(Item item) throws RingBufferException {
+		ringBuffer.enqueue(item);
 		// TODO
 		// RingBufferException actual = null;
 		// RingBufferException expected = (!ringBuffer.isEmpty()) ? null
@@ -80,7 +81,10 @@ public class RingBufferWrapper<Item> {
 		}
 
 		// postconditions if exception occurs
-		assert actual == expected;
+		if (actual == null)
+			assert actual == expected;
+		else
+			assert actual.getMessage().equalsIgnoreCase(expected.getMessage());
 		// postconditions if exception occurs end
 
 		return dequeuedItem;
