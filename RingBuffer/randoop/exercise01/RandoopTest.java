@@ -1,4 +1,4 @@
-package exerecise01;
+package exercise01;
 import junit.framework.*;
 import junit.textui.*;
 
