@@ -112,5 +112,26 @@ public class RingBufferWrapper<Item> {
 
 		return iterator;
 	}
+	
+	 public class RingBufferIteratorWrapper implements Iterator<Item> {
+		 
+		 Iterator<Item> iterator;
+		 
+		 public RingBufferIteratorWrapper (){
+			 iterator = ringBuffer.iterator();
+		 }
+
+		public boolean hasNext() {
+			return iterator.hasNext();
+		}
+
+		public void remove() {
+			iterator.remove();
+		}
+
+		public Item next() {
+			return iterator.next();
+		}
+	    }
 
 }
