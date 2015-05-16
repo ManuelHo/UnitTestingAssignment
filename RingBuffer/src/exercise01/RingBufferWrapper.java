@@ -1,11 +1,12 @@
 package exercise01;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class RingBufferWrapper<Item> {
 
 	private RingBuffer<Item> ringBuffer;
-	
+
 	private int capacity;
 
 	public RingBufferWrapper(int capacity) {
@@ -49,7 +50,7 @@ public class RingBufferWrapper<Item> {
 		RingBufferException actual = null;
 		RingBufferException expected = (ringBuffer.size() == capacity) ? new RingBufferException(
 				"Ring buffer overflow") : null;
-		
+
 		int oldRingBufferSize = ringBuffer.size();
 		// preconditions end
 
@@ -60,12 +61,14 @@ public class RingBufferWrapper<Item> {
 		} catch (RingBufferException e) {
 			actual = e;
 		}
-		
+
 		if (actual == null)
 			assert actual == expected : "There should be no exception";
-		else
+		else {
 			// postconditions if exception occurs
 			assert actual.getMessage().equalsIgnoreCase(expected.getMessage()) : "Exceptions do not match";
+			throw actual;
+		}
 	}
 
 	public Item dequeue() throws RingBufferException {
@@ -91,8 +94,10 @@ public class RingBufferWrapper<Item> {
 		// postconditions if exception occurs
 		if (actual == null)
 			assert actual == expected : "There should be no exception";
-		else
+		else {
 			assert actual.getMessage().equalsIgnoreCase(expected.getMessage()) : "Exceptions do not match";
+			throw actual;
+		}
 		// postconditions if exception occurs end
 
 		return dequeuedItem;
@@ -112,26 +117,26 @@ public class RingBufferWrapper<Item> {
 
 		return new RingBufferIteratorWrapper();
 	}
-	
-	 public class RingBufferIteratorWrapper implements Iterator<Item> {
-		 
-		 Iterator<Item> iterator;
-		 
-		 public RingBufferIteratorWrapper (){
-			 iterator = ringBuffer.iterator();
-		 }
+
+	public class RingBufferIteratorWrapper implements Iterator<Item> {
+
+		Iterator<Item> iterator;
+
+		public RingBufferIteratorWrapper() {
+			iterator = ringBuffer.iterator();
+		}
 
 		public boolean hasNext() {
 			// preconditions start
 			boolean oldHasNext = iterator.hasNext();
 			// preconditions end
-			
+
 			boolean newHasNext = iterator.hasNext();
-			
+
 			// postconditions start
 			assert oldHasNext == newHasNext : "state of iterator has changed";
 			// postconditions end
-			
+
 			return iterator.hasNext();
 		}
 
@@ -142,7 +147,6 @@ public class RingBufferWrapper<Item> {
 
 			try {
 				iterator.remove();
-				// code not reachable
 			} catch (UnsupportedOperationException e) {
 				actual = e;
 			}
@@ -150,12 +154,26 @@ public class RingBufferWrapper<Item> {
 			// postconditions start
 			assert (actual instanceof UnsupportedOperationException);
 			// postconditions end
+			throw actual;
 		}
 
 		public Item next() {
-			return iterator.next();
-				
+			// preconditions start
+			NoSuchElementException actual = null;
+			Item nextItem = null;
+			// preconditions end
+			try {
+				nextItem = iterator.next();
+			} catch (NoSuchElementException e) {
+				actual = e;
+			}
+			if (actual != null) {
+				assert (actual instanceof NoSuchElementException);
+				throw actual;
+			}
+			return nextItem;
+
 		}
-	    }
+	}
 
 }
