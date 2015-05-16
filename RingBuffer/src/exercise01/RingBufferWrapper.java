@@ -42,63 +42,62 @@ public class RingBufferWrapper<Item> {
 	}
 
 	public void enqueue(Item item) throws RingBufferException {
-		//TODO
-//		RingBufferException actual = null;
-//		RingBufferException expected = (!ringBuffer.isEmpty()) ? null
-//				: new RingBufferException("Ring buffer overflow");
-//
-//		int oldRingBufferSize = ringBuffer.size();
-//		
-//		try {			
-//			ringBuffer.enqueue(item);
-//			assert (ringBuffer.size() == (oldRingBufferSize - 1) );
-//		}catch (RingBufferException e){
-//			actual = e;
-//		}
-//		
-//		assert actual == expected;
+		// TODO
+		// RingBufferException actual = null;
+		// RingBufferException expected = (!ringBuffer.isEmpty()) ? null
+		// : new RingBufferException("Ring buffer overflow");
+		//
+		// int oldRingBufferSize = ringBuffer.size();
+		//
+		// try {
+		// ringBuffer.enqueue(item);
+		// assert (ringBuffer.size() == (oldRingBufferSize - 1) );
+		// }catch (RingBufferException e){
+		// actual = e;
+		// }
+		//
+		// assert actual == expected;
 	}
 
 	public Item dequeue() throws RingBufferException {
-		//preconditions start
+		// preconditions start
 		RingBufferException actual = null;
 		RingBufferException expected = (!ringBuffer.isEmpty()) ? null
 				: new RingBufferException("Ring buffer underflow");
 
 		int oldRingBufferSize = ringBuffer.size();
 		Item dequeuedItem = null;
-		//preconditions end
-		
-		
+		// preconditions end
+
 		try {
 			dequeuedItem = ringBuffer.dequeue();
-			//postconditions if no exception occurs start
-			assert (ringBuffer.size() == (oldRingBufferSize - 1) );
+			// postconditions if no exception occurs start
+			assert (ringBuffer.size() == (oldRingBufferSize - 1));
 			assert (ringBuffer.size() == 0) == ringBuffer.isEmpty();
-			//postconditions if no exception occurs end
-		} catch (RingBufferException e){
+			// postconditions if no exception occurs end
+		} catch (RingBufferException e) {
 			actual = e;
 		}
-		
-		//postconditions if exception occurs
+
+		// postconditions if exception occurs
 		assert actual == expected;
-		//postconditions if exception occurs end
-		
+		// postconditions if exception occurs end
+
 		return dequeuedItem;
 	}
 
 	public Iterator<Item> iterator() {
-		//preconditions start
+		// preconditions start
 		Iterator<Item> oldIterator = ringBuffer.iterator();
-		//preconditions end
-		
+		// preconditions end
+
 		Iterator<Item> iterator = ringBuffer.iterator();
-		
-		//postconditions start
+
+		// postconditions start
 		assert iterator.hasNext() == oldIterator.hasNext();
 		assert iterator.hasNext() == !ringBuffer.isEmpty();
-		//postconditions end
-		
+		// postconditions end
+
 		return iterator;
 	}
 
