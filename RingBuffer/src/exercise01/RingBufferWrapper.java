@@ -136,32 +136,20 @@ public class RingBufferWrapper<Item> {
 		}
 
 		public void remove() {
-		
-			
-		
-			//preconditions start
-			
+			// preconditions start
 			UnsupportedOperationException actual = null;
-			UnsupportedOperationException expected = new UnsupportedOperationException();
-			
-			//preconditions end
-			
-			try
-			{
+			// preconditions end
+
+			try {
 				iterator.remove();
-				//code not reachable
-			}
-			 catch (UnsupportedOperationException e) {
+				// code not reachable
+			} catch (UnsupportedOperationException e) {
 				actual = e;
 			}
-			
-			//postconditions start
-			
-			assert(actual.equals(expected));
-			
-			//postconditions end
-			
-			
+
+			// postconditions start
+			assert (actual instanceof UnsupportedOperationException);
+			// postconditions end
 		}
 
 		public Item next() {
