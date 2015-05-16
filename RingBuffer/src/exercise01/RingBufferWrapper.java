@@ -122,6 +122,16 @@ public class RingBufferWrapper<Item> {
 		 }
 
 		public boolean hasNext() {
+			// preconditions start
+			boolean oldHasNext = iterator.hasNext();
+			// preconditions end
+			
+			boolean newHasNext = iterator.hasNext();
+			
+			// postconditions start
+			assert oldHasNext == newHasNext : "state of iterator has changed";
+			// postconditions end
+			
 			return iterator.hasNext();
 		}
 
