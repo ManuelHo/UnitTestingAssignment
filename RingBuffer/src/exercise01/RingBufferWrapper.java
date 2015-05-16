@@ -110,7 +110,7 @@ public class RingBufferWrapper<Item> {
 		assert iterator.hasNext() == !ringBuffer.isEmpty() : "hasNext must not return same result as isEmpty";
 		// postconditions end
 
-		return iterator;
+		return new RingBufferIteratorWrapper();
 	}
 	
 	 public class RingBufferIteratorWrapper implements Iterator<Item> {
