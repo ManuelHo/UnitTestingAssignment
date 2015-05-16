@@ -1,5 +1,6 @@
 package calculator;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 import calculator.exception.IllegalOperatorException;
