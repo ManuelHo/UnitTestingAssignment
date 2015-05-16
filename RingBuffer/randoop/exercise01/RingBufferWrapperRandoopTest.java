@@ -1,0 +1,26 @@
+package exercise01;
+import junit.framework.*;
+import junit.textui.*;
+
+public class RingBufferWrapperRandoopTest extends TestCase {
+
+  public static void main(String[] args) {
+    TestRunner runner = new TestRunner();
+    TestResult result = runner.doRun(suite(), false);
+    if (! result.wasSuccessful()) {
+      System.exit(1);
+    }
+  }
+
+  public RingBufferWrapperRandoopTest(String name) {
+    super(name);
+  }
+
+  public static Test suite() {
+    TestSuite result = new TestSuite();
+    result.addTest(new TestSuite(RingBufferWrapperRandoopTest0.class));
+    result.addTest(new TestSuite(RingBufferWrapperRandoopTest1.class));
+    return result;
+  }
+
+}
