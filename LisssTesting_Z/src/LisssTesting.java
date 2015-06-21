@@ -39,7 +39,7 @@ public class LisssTesting {
 			verificationErrors.append(e.toString());
 		}
 		assertEquals(
-				"1.204",
+				"1.214",
 				driver.findElement(
 						By.xpath("//div[@id='resultsNumbersTile']/h1/em"))
 						.getText());
